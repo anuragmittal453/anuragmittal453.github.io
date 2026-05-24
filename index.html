@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Anurag Mittal — Robotics Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#f5f4f1;--bg2:#fafaf8;--bg3:#eceae5;
+  --surface:rgba(255,255,255,0.72);--surface-hi:rgba(255,255,255,0.92);
+  --border:rgba(0,0,0,0.07);--border-soft:rgba(0,0,0,0.045);
+  --text:#1e2220;--text-soft:#5c645e;--muted:#8d958e;
+  --accent:#6e8f7a;--accent-warm:#b99b7a;--accent-cool:#7d93a6;--accent-muted:#9891b2;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md:0 8px 24px rgba(0,0,0,0.07);
+  --shadow-lg:0 20px 48px rgba(0,0,0,0.09);
+  --radius:18px;--t:all 0.22s ease;
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 8% 12%,rgba(110,143,122,.09),transparent 34%),radial-gradient(ellipse at 88% 78%,rgba(155,145,178,.07),transparent 32%),radial-gradient(ellipse at 72% 18%,rgba(185,155,122,.06),transparent 28%);pointer-events:none;z-index:0;}
+.wrap{width:min(960px,calc(100vw - 48px));margin:0 auto;position:relative;z-index:1;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0 0;margin-bottom:76px;}
+.nav-name{font-size:15px;font-weight:600;letter-spacing:-0.02em;}
+.nav-links{display:flex;gap:4px;list-style:none;}
+.nav-links a{display:block;padding:8px 14px;border-radius:40px;font-size:13px;font-weight:500;color:var(--text-soft);text-decoration:none;transition:var(--t);}
+.nav-links a:hover{background:rgba(110,143,122,0.1);color:var(--accent);}
+.hero{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:start;padding-bottom:96px;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:40px;background:rgba(110,143,122,0.1);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:28px;}
+.hero-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);animation:blink 2.4s ease infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(42px,6.5vw,72px);font-weight:300;line-height:1.04;letter-spacing:-0.05em;margin-bottom:20px;}
+.hero h1 em{font-style:italic;color:var(--accent);}
+.hero-sub{font-size:17px;color:var(--text-soft);max-width:560px;line-height:1.75;margin-bottom:36px;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+.cta{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:40px;font-size:13px;font-weight:600;text-decoration:none;transition:var(--t);cursor:pointer;border:none;}
+.cta-primary{background:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(110,143,122,0.22);}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(110,143,122,0.28);}
+.cta-ghost{background:var(--surface);color:var(--text-soft);border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.cta-ghost:hover{background:var(--surface-hi);color:var(--text);transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.hero-photo{width:200px;flex-shrink:0;}
+.photo-frame{width:200px;height:220px;border-radius:28px;overflow:hidden;background:var(--bg3);border:1px solid var(--border);box-shadow:var(--shadow-md);position:relative;}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:var(--t);}
+.photo-frame:hover img{transform:scale(1.03);}
+.photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:12px;text-align:center;padding:20px;}
+.photo-placeholder svg{opacity:0.35;}
+.photo-tags{margin-top:12px;display:flex;flex-direction:column;gap:6px;}
+.photo-tag{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--border);font-size:11px;font-weight:500;color:var(--text-soft);box-shadow:var(--shadow-sm);}
+.photo-tag-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.section-label{display:flex;align-items:center;gap:12px;margin-bottom:24px;font-size:10px;text-transform:uppercase;letter-spacing:0.16em;font-weight:700;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+section{margin-bottom:88px;}
+.about-grid{display:grid;grid-template-columns:1.5fr 0.9fr;gap:20px;}
+.about-main{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow-sm);}
+.about-main p{font-size:16px;color:var(--text-soft);line-height:1.8;}
+.about-side{display:flex;flex-direction:column;gap:14px;}
+.meta-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow-sm);transition:var(--t);}
+.meta-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);background:var(--surface-hi);}
+.meta-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;font-weight:700;font-family:'IBM Plex Mono',monospace;}
+.meta-value{font-size:15px;font-weight:600;color:var(--text);}
+.meta-sub{margin-top:3px;color:var(--text-soft);font-size:12px;}
+.timeline{display:flex;flex-direction:column;gap:0;position:relative;padding-left:20px;}
+.timeline::before{content:'';position:absolute;left:6px;top:12px;bottom:12px;width:1px;background:linear-gradient(to bottom,var(--accent),var(--border),transparent);}
+.tl-item{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;padding:22px 22px 22px 28px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:var(--t);position:relative;margin-bottom:12px;}
+.tl-item::before{content:'';position:absolute;left:-20px;top:28px;width:12px;height:12px;border-radius:50%;background:var(--bg3);border:2px solid var(--accent);box-shadow:0 0 0 3px var(--bg);transition:var(--t);}
+.tl-item:hover{transform:translateX(4px);box-shadow:var(--shadow-md);background:var(--surface-hi);}
+.tl-item:hover::before{background:var(--accent);box-shadow:0 0 0 3px rgba(110,143,122,0.15);}
+.tl-role{font-size:16px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.tl-org{font-size:13px;color:var(--accent);margin-bottom:8px;font-weight:500;}
+.tl-desc{font-size:13px;color:var(--text-soft);line-height:1.7;}
+.tl-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;padding-top:2px;}
+.projects-cascade{display:flex;flex-direction:column;gap:10px;}
+.project-item{border-radius:var(--radius);overflow:hidden;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:var(--t);cursor:pointer;}
+.project-item:hover{box-shadow:var(--shadow-md);background:var(--surface-hi);}
+.project-item.open{box-shadow:var(--shadow-lg);background:var(--surface-hi);}
+.project-head{display:grid;grid-template-columns:6px 1fr auto;gap:0;align-items:stretch;}
+.project-accent{width:6px;flex-shrink:0;transition:var(--t);}
+.project-head-inner{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;}
+.project-type-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;font-weight:500;margin-bottom:5px;}
+.project-title{font-size:17px;font-weight:600;color:var(--text);line-height:1.3;}
+.project-chevron{font-size:11px;color:var(--muted);transition:transform 0.22s ease;flex-shrink:0;margin-left:20px;}
+.project-item.open .project-chevron{transform:rotate(180deg);}
+.project-body{display:none;padding:0 22px 22px 28px;border-top:1px solid var(--border-soft);}
+.project-item.open .project-body{display:block;}
+.project-desc{font-size:14px;color:var(--text-soft);line-height:1.8;padding-top:18px;margin-bottom:18px;}
+.project-stack{display:flex;flex-wrap:wrap;gap:8px;}
+.stack-chip{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:6px;background:var(--bg3);color:var(--text-soft);border:1px solid var(--border-soft);}
+.pa-green{background:rgba(110,143,122,0.15);}
+.pt-green{color:var(--accent);}
+.pa-warm{background:rgba(185,155,122,0.15);}
+.pt-warm{color:var(--accent-warm);}
+.pa-cool{background:rgba(125,147,166,0.15);}
+.pt-cool{color:var(--accent-cool);}
+.pa-muted{background:rgba(152,145,178,0.15);}
+.pt-muted{color:var(--accent-muted);}
+.pb-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;transition:var(--t);}
+.pb-link:hover{opacity:0.7;}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.skill-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow-sm);transition:var(--t);}
+.skill-block:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.skill-block.wide{grid-column:span 2;}
+.skill-title{font-size:10px;text-transform:uppercase;letter-spacing:0.14em;font-weight:700;color:var(--muted);margin-bottom:14px;font-family:'IBM Plex Mono',monospace;}
+.skill-pills{display:flex;flex-wrap:wrap;gap:7px;}
+.skill-pill{padding:5px 12px;border-radius:20px;font-size:13px;font-weight:500;background:rgba(0,0,0,0.04);color:var(--text-soft);transition:var(--t);cursor:default;}
+.skill-pill:hover{background:rgba(110,143,122,0.12);color:var(--accent);}
+.contact-wrap{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:48px 52px;box-shadow:var(--shadow-md);display:flex;align-items:flex-start;justify-content:space-between;gap:40px;}
+.contact-left h2{font-family:'Fraunces',serif;font-size:40px;font-weight:300;letter-spacing:-0.04em;line-height:1.1;margin-bottom:14px;}
+.contact-left p{font-size:15px;color:var(--text-soft);max-width:380px;line-height:1.7;}
+.contact-right{display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+.contact-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:40px;font-size:13px;font-weight:600;text-decoration:none;transition:var(--t);white-space:nowrap;}
+.cb-gh{background:rgba(30,34,32,0.07);color:var(--text);}
+.cb-li{background:rgba(125,147,166,0.12);color:var(--accent-cool);}
+.cb-em{background:rgba(110,143,122,0.12);color:var(--accent);}
+.contact-btn:hover{transform:translateX(4px);}
+footer{padding:36px 0 64px;border-top:1px solid var(--border-soft);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;align-items:center;}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.reveal.visible{opacity:1;transform:none;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+@media(max-width:780px){
+  .hero{grid-template-columns:1fr;gap:36px;}
+  .hero-photo{width:100%;}
+  .photo-frame{width:100%;height:200px;}
+  .about-grid{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:1fr;}
+  .skill-block.wide{grid-column:span 1;}
+  .contact-wrap{flex-direction:column;padding:32px;}
+  nav{flex-direction:column;gap:16px;margin-bottom:48px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <div class="nav-name">Anurag Mittal</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero reveal">
+  <div class="hero-left">
+    <div class="hero-badge">Robotics Research · Embodied AI</div>
+    <h1>Building<br><em>contact-aware</em><br>robotic systems.</h1>
+    <p class="hero-sub">Focused on proprioceptive active perception, tactile interaction, and uncertainty-driven manipulation for transparent and reflective object understanding.</p>
+    <div class="hero-ctas">
+      <a href="#projects" class="cta cta-primary">Selected Projects →</a>
+      <a href="#contact" class="cta cta-ghost">Research Contact</a>
+      <a href="https://github.com/anuragmittal453" class="cta cta-ghost" target="_blank">GitHub ↗</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="photo-frame">
+      <img src="photo.jpg" alt="Anurag Mittal" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="photo-placeholder" style="display:none">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Add photo.jpg<br>to your repo</span>
+      </div>
+    </div>
+    <div class="photo-tags">
+      <div class="photo-tag"><div class="photo-tag-dot" style="background:var(--accent)"></div>FR3 · MuJoCo · ROS2</div>
+      <div class="photo-tag"><div class="photo-tag-dot" style="background:var(--accent-warm)"></div>Active Perception</div>
+      <div class="photo-tag"><div class="photo-tag-dot" style="background:var(--accent-cool)"></div>Contact-Rich Manipulation</div>
+    </div>
+  </div>
+</div>
+
+<section id="about" class="reveal">
+  <div class="section-label">About</div>
+  <div class="about-grid">
+    <div class="about-main">
+      <p>I'm a robotics researcher working at the intersection of perception, control, and embodied intelligence. My current research focuses on proprioceptive active perception — enabling robots to infer object geometry and contact states using intrinsic sensing, uncertainty-aware exploration, and interaction-driven reasoning. I believe the future of robust manipulation lies in what robots <em>feel</em>, not just what they see.</p>
+    </div>
+    <div class="about-side">
+      <div class="meta-card"><div class="meta-label">Current Stack</div><div class="meta-value">MuJoCo · ROS2 Humble</div><div class="meta-sub">Franka FR3 simulation</div></div>
+      <div class="meta-card"><div class="meta-label">Research Direction</div><div class="meta-value">Active Perception</div><div class="meta-sub">Contact-rich manipulation</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="reveal">
+  <div class="section-label">Education</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div>
+        <div class="tl-role">B.Tech — Mechanical Engineering</div>
+        <div class="tl-org">Indian Institute of Technology, Delhi</div>
+        <div class="tl-desc">Research focused on designing a continuum manipulator for neurosurgery applications.</div>
+      </div>
+      <div class="tl-date">2019 — 2023</div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="reveal">
+  <div class="section-label">Experience</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div><div class="tl-role">Robotics Research Intern</div><div class="tl-org">IIT Gandhinagar Robotics Lab</div><div class="tl-desc">Worked on proprioceptive manipulation, uncertainty-aware tactile perception, and active exploration systems using Franka FR3 and ROS2.</div></div>
+      <div class="tl-date">Jan — Apr 2026</div>
+    </div>
+    <div class="tl-item">
+      <div><div class="tl-role">Controls Intern</div><div class="tl-org">Sharang Shakti Pvt. Ltd.</div><div class="tl-desc">Non-linear direct acceleration control of quadrotors on Simulink — Sliding Mode Control, Adaptive Control, Model Predictive Control.</div></div>
+      <div class="tl-date">Jun — Oct 2025</div>
+    </div>
+    <div class="tl-item">
+      <div><div class="tl-role">Research Assistant</div><div class="tl-org">Inspire Lab — IIT Madras</div><div class="tl-desc">Designed a novel handheld mechanical controller for an endoscope with an increased number of degrees of freedom.</div></div>
+      <div class="tl-date">Apr — Oct 2024</div>
+    </div>
+    <div class="tl-item">
+      <div><div class="tl-role">Mechanical Design Intern</div><div class="tl-org">Botlab Dynamics Pvt. Ltd.</div><div class="tl-desc">Designed a storage stack for drones for safe transport and handling.</div></div>
+      <div class="tl-date">Jun — Jul 2022</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="reveal">
+  <div class="section-label">Selected Projects</div>
+  <div class="projects-cascade">
+
+    <div class="project-item" onclick="toggleProject(this)">
+      <div class="project-head">
+        <div class="project-accent pa-green"></div>
+        <div class="project-head-inner">
+          <div><div class="project-type-tag pt-green">Active Research</div><div class="project-title">Proprioceptive Active Perception for Reflective/Transparent Objects</div></div>
+          <div class="project-chevron">▼</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">Intrinsic joint torque sensing combined with uncertainty-driven next-best-view planning for manipulation of transparent and reflective objects — without external tactile hardware or dedicated F/T sensors. The robot uses joint torque residuals (τ_ext = τ_meas − τ_model) as the sole proprioceptive channel, closed-loop with a greedy entropy-minimising NBV planner on a wrist RGB-D camera.</div>
+        <div class="project-stack"><span class="stack-chip">MuJoCo</span><span class="stack-chip">ROS2 Humble</span><span class="stack-chip">Franka FR3</span><span class="stack-chip">Active Perception</span><span class="stack-chip">Impedance Control</span><span class="stack-chip">NBV Planning</span></div>
+        <a href="#" class="pb-link">In Progress — GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="toggleProject(this)">
+      <div class="project-head">
+        <div class="project-accent pa-warm"></div>
+        <div class="project-head-inner">
+          <div><div class="project-type-tag pt-warm">Active Tactile Perception</div><div class="project-title">Vision-Free Active Tactile Exploration</div></div>
+          <div class="project-chevron">▼</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">Vision-free active tactile exploration framework for planar surface edge detection and reconstruction using only intrinsic end-effector force-torque sensing of the Franka FR3 — no dedicated tactile skin. GP-based active probing with UCB/MI acquisition, three-phase impedance probe controller, 6-phase grasp loop with slip detection, and place verification.</div>
+        <div class="project-stack"><span class="stack-chip">Franka FR3</span><span class="stack-chip">Gaussian Processes</span><span class="stack-chip">UCB / BALD</span><span class="stack-chip">Impedance Control</span><span class="stack-chip">F/T Sensing</span><span class="stack-chip">ROS2</span></div>
+        <a href="#" class="pb-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="toggleProject(this)">
+      <div class="project-head">
+        <div class="project-accent pa-warm"></div>
+        <div class="project-head-inner">
+          <div><div class="project-type-tag pt-warm">Perception</div><div class="project-title">Visuo-Tactile Exploration Pipeline</div></div>
+          <div class="project-chevron">▼</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">GP-based active tactile exploration system combining a single top-down RGB-D prior (Laplacian edges + depth variance) with uncertainty-guided probing and impedance interaction for reflective object localisation. 5/5 grasp success on matte targets, 85s unattended cycle time.</div>
+        <div class="project-stack"><span class="stack-chip">Gaussian Processes</span><span class="stack-chip">Impedance Control</span><span class="stack-chip">MuJoCo</span><span class="stack-chip">ROS2</span></div>
+        <a href="#" class="pb-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="toggleProject(this)">
+      <div class="project-head">
+        <div class="project-accent pa-cool"></div>
+        <div class="project-head-inner">
+          <div><div class="project-type-tag pt-cool">Machine Learning</div><div class="project-title">6-DOF Relative Pose Estimation</div></div>
+          <div class="project-chevron">▼</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">Self-supervised Siamese ResNet-18 with continuous 6D rotation representation and SO(3) geodesic loss, trained on 50k simulated image pairs. 1.32° median rotation error with 99.7% predictions within 5°.</div>
+        <div class="project-stack"><span class="stack-chip">PyTorch</span><span class="stack-chip">SO(3) Geodesic Loss</span><span class="stack-chip">Self-Supervised</span><span class="stack-chip">MuJoCo</span><span class="stack-chip">Colab A100</span></div>
+        <a href="#" class="pb-link">GitHub →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills" class="reveal">
+  <div class="section-label">Technical Areas</div>
+  <div class="skills-grid">
+    <div class="skill-block"><div class="skill-title">Robotics</div><div class="skill-pills"><span class="skill-pill">MuJoCo</span><span class="skill-pill">ROS2 Humble</span><span class="skill-pill">Franka FR3</span><span class="skill-pill">FK / IK</span><span class="skill-pill">Contact Estimation</span><span class="skill-pill">Manipulation</span></div></div>
+    <div class="skill-block"><div class="skill-title">Perception</div><div class="skill-pills"><span class="skill-pill">Active Perception</span><span class="skill-pill">Gaussian Processes</span><span class="skill-pill">NBV Planning</span><span class="skill-pill">Pose Estimation</span><span class="skill-pill">Tactile Exploration</span></div></div>
+    <div class="skill-block"><div class="skill-title">Control Systems</div><div class="skill-pills"><span class="skill-pill">Impedance Control</span><span class="skill-pill">Admittance Control</span><span class="skill-pill">DLS-IK</span><span class="skill-pill">Sliding Mode Control</span><span class="skill-pill">Adaptive Control</span><span class="skill-pill">MPC</span></div></div>
+    <div class="skill-block"><div class="skill-title">Learning</div><div class="skill-pills"><span class="skill-pill">PyTorch</span><span class="skill-pill">Self-Supervised</span></div></div>
+    <div class="skill-block wide"><div class="skill-title">Infrastructure</div><div class="skill-pills"><span class="skill-pill">Python</span><span class="skill-pill">C++</span><span class="skill-pill">Docker</span><span class="skill-pill">Git</span><span class="skill-pill">Google Colab Pro+</span><span class="skill-pill">Linux</span><span class="skill-pill">Simulink</span><span class="skill-pill">LaTeX</span></div></div>
+  </div>
+</section>
+
+<section id="contact" class="reveal">
+  <div class="section-label">Contact</div>
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <h2>Open to research<br>collaborations.</h2>
+      <p>Interested in robotics systems, embodied intelligence, active perception, and contact-rich manipulation research. Always happy to discuss papers, ideas, or shared problems.</p>
+    </div>
+    <div class="contact-right">
+      <a href="https://github.com/anuragmittal453" class="contact-btn cb-gh" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/anurag-mittal-68936a191/" class="contact-btn cb-li" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:anuragmittal453@gmail.com" class="contact-btn cb-em">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        anuragmittal453@gmail.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Anurag Mittal · Robotics Research</span>
+  <span>Jaipur, India · 2026</span>
+</footer>
+
+</div>
+
+<script>
+function toggleProject(el){
+  const wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.project-item.open').forEach(p=>p.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+document.querySelector('.project-item')?.classList.add('open');
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*60);observer.unobserve(e.target);}
+  });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+const navLinks=document.querySelectorAll('.nav-links a');
+const secObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;
+      navLinks.forEach(a=>{
+        const active=a.getAttribute('href')===`#${id}`;
+        a.style.color=active?'var(--accent)':'';
+        a.style.background=active?'rgba(110,143,122,0.1)':'';
+      });
+    }
+  });
+},{threshold:0.4});
+document.querySelectorAll('section[id]').forEach(s=>secObserver.observe(s));
+</script>
+</body>
+</html>
